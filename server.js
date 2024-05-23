@@ -2,7 +2,6 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
-const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
@@ -14,18 +13,28 @@ const io = socketIo(server, {
 
 const port = process.env.PORT || 5000;
 
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(cors({
-  origin: 'https://localhost:3000'
+  origin: 'http://localhost:3000'
 }));
+
+const CHAT_PASSWORD = "your_passwd";  // 设定聊天室密码
+
+// 登录路由，用于验证密码
+app.get('/login', (req, res) => {
+  const password = req.query.password;
+  if (password === CHAT_PASSWORD) {
+    res.send('Authorized');
+  } else {
+    res.status(401).send('Unauthorized');
+  }
+});
 
 io.on('connection', (socket) => {
   console.log('a user connected');
 
   socket.on('chat message', (msg) => {
     console.log('message: ' + msg); // 添加调试日志
-    io.emit('chat message', { message: msg, id: socket.id }); // 包含发送者的 ID
+    io.emit('chat message', { message: msg, id: socket.id }); // 广播消息给所有客户端
   });
 
   socket.on('disconnect', () => {
