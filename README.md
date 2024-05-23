@@ -1,6 +1,6 @@
 # Node.js Chat Application Backend
 
-This is the backend for a chat application built with Node.js, Express, and Socket.IO.
+This is the backend for a chat application built with Node.js, Express, and Socket.IO. It serves as a backend chat room for website owners to communicate with frontend visitors.
 
 ## Prerequisites
 
