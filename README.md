@@ -1,5 +1,3 @@
-# my-web-backend
-
 # Node.js Chat Application Backend
 
 This is the backend for a chat application built with Node.js, Express, and Socket.IO.
