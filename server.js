@@ -14,7 +14,10 @@ const io = socketIo(server, {
 const port = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: '*', // 允许所有来源
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // 允许的请求方法
+  allowedHeaders: ['Content-Type', 'Authorization'], // 允许的头
+  credentials: true // 如果需要发送cookie
 }));
 
 const CHAT_PASSWORD = "your_passwd";  // 设定聊天室密码
