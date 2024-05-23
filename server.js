@@ -14,15 +14,15 @@ const io = socketIo(server, {
 const port = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: '*', // 允许所有来源
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // 允许的请求方法
-  allowedHeaders: ['Content-Type', 'Authorization'], // 允许的头
-  credentials: true // 如果需要发送cookie
+  origin: '*', // Allow all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed request methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+  credentials: true // If cookies need to be sent
 }));
 
-const CHAT_PASSWORD = "your_passwd";  // 设定聊天室密码
+const CHAT_PASSWORD = "your_passwd";  // Set chat room password
 
-// 登录路由，用于验证密码
+// Login route for password verification
 app.get('/login', (req, res) => {
   const password = req.query.password;
   if (password === CHAT_PASSWORD) {
@@ -36,8 +36,8 @@ io.on('connection', (socket) => {
   console.log('a user connected');
 
   socket.on('chat message', (msg) => {
-    console.log('message: ' + msg); // 添加调试日志
-    io.emit('chat message', { message: msg, id: socket.id }); // 广播消息给所有客户端
+    console.log('message: ' + msg); // Add debug log
+    io.emit('chat message', { message: msg, id: socket.id }); // Broadcast message to all clients
   });
 
   socket.on('disconnect', () => {
